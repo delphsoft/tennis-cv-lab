@@ -11,6 +11,7 @@ import {
   syntheticScene,
   type Landmark
 } from "./engine";
+import { loadMediapipeVision } from "./loadVision";
 
 type Mode = "idle" | "demo" | "camera" | "video";
 type Stroke = { t: number; kind: "forehand" | "backhand"; speedKmh: number; wallX: number; wallY: number };
@@ -61,9 +62,7 @@ export default function Page() {
     let cancelled = false;
     (async () => {
       try {
-        const mod = await import(
-          /* webpackIgnore: true */ "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.17/+esm"
-        );
+        const mod = await loadMediapipeVision();
         const vision = await mod.FilesetResolver.forVisionTasks(
           "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.17/wasm"
         );
